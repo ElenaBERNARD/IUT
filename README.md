@@ -1,7 +1,7 @@
 # IUT
-# School Repository
+## School Repository
 
-This repository is created for educational purposes. The content and code within this repository are intended for academic use only.
+This repository is created for educational purposes. The content and code within this repository are intended for my personal use, but can be used by anyone.
 
 ## Purpose
 
