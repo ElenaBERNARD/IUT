@@ -1,0 +1,18 @@
+.entete {
+    display: flex;
+    height:50px;
+    background-color: hotpink;
+    color: #fff;
+    text-align: center;
+    font-size: 40px;
+}
+.boite {
+    margin-top: auto;
+    display: flex;
+    height:50px;
+    width:50px;
+    background-color: red;
+    color: #fff;
+    text-align: center;
+    font-size: 40px;
+}

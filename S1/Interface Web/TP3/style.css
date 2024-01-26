@@ -1,0 +1,65 @@
+body{
+    background-color: grey;
+    color: white 
+}
+
+div button{
+    display: flex;
+    position:relative;
+    left: 50%;
+    top: 50%;
+}
+
+li:nth-child(odd):hover{
+    color: yellow;
+}
+
+li:nth-child(2):hover{
+    color: red;
+    font-weight: bold;
+    transition: all linear 1s;
+}
+
+li:nth-child(4):hover{
+    color: black;
+    background-color: aqua;
+    transition: all linear 1s;
+}
+
+.text{
+    font-family: monospace;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.italic{
+    font-style: italic;
+}
+
+.red{
+    color:red;
+}
+
+.card{
+    background-color: wheat;
+    padding:2% 2%;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  
+.card:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+  
+.container{
+    display: flex;    
+    padding: 2px 15px;
+}
+.card-container{
+    display: flex;
+    justify-content: space-around;
+    gap: 2%;
+}

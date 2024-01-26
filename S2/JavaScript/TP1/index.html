@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>IMC</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="dropdown">
+            <a class="button-dropdown">
+                Actions<i class="fa fa-caret-down"></i>
+            </a>
+            <div class="dropdown-content">
+                <a onclick="effacer()" title="Effacer">Effacer</a>
+                <a onclick="imprimer()" title="Imprimer">Imprimer</a>
+                <a onclick="calculer()" onmouseover="show_message()" onmouseleave="hide_message()" title="Calculer">Calculer</a>
+            </div>
+            <div class="dropdown">
+                <a class="button-dropdown">
+                    Mode<i class="fa fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a onclick="" title="Effacer">IMC</a>
+                    <a onclick="" title="Imprimer">Temperature</a>
+                    <a onclick="" title="Calculer">Fibonnacci</a>
+                </div>
+            </div>
+            <a class="button-dropdown">
+                Help
+            </a>
+        </div>
+    </div>
+    <fieldset>
+        <legend>Calcul d'IMC</legend>
+        <p>Selectionnez votre sexe : </p>
+        <input type="radio" name="sexe" id="masc" value="M" checked>
+        <label id="labelMasc" for="masc">Homme/Masc</label><br>
+        <input type="radio" name="sexe" id="fem" value="F">
+        <label id="labelFem" for="fem">Femme/Fem</label><br>
+        <label id="labelTaille" for="taille">Entrez votre taille (en m ou cm) : </label><br>
+        <input name="taille" id="taille" type="text" onchange="testTaille()"><br>
+        <div style="display:none" id="errorTaille">Entrez un nombre positif</div><br>
+        <label id="labelMasse" for="masse">Entrez votre masse (en Kg) : </label><br>
+        <input name="masse" id="masse" type="text" onchange="testMasse()"><br>
+        <div style="display:none" id="errorMasse">Entrez un nombre positif</div><br>
+    
+        <div id="message" style="display:none">Appuyez sur le bouton pour calculer</div><br>
+        <div id="resultat"></div><br>
+        <div id="etat"></div>
+    </fieldset>
+</body>
+
+</html>

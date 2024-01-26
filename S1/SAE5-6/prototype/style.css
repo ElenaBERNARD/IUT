@@ -1,0 +1,39 @@
+header{
+    position: fixed;
+    left : 0;
+    top : 0;
+    width: 100%;
+    background-color: lightblue;
+    color: black;
+}
+
+.arkaneIcon{
+    position: relative;
+    left: 0;
+    top: 0;
+    width:5%;
+    height: 5%;
+}
+
+body{
+    background-color:rgb(65, 67, 69);
+}
+
+p{
+    position: fixed;
+    left : 5%;
+    top : 5%;
+    color: white;
+    text-align: left;
+}
+
+footer{
+    position: fixed;
+    left : 0;
+    bottom : 0;
+    width: 100%;
+    text-size-adjust: none;
+    background-color: lightblue;
+    color: black;
+    text-align: center;
+}

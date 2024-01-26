@@ -1,0 +1,47 @@
+.colored-red {
+    accent-color: lightblue;
+}
+.colored-green {
+    accent-color: pink;
+}
+.colored-white {
+    accent-color: white;
+}
+
+*{
+    font-family: monospace;
+}
+
+h1{
+    text-align: center;
+    color: blue;
+    font-size: xx-large;
+    border: 2px solid black;
+}
+
+h2, h3{
+    color: green;
+    text-decoration: underline;
+}
+
+h3 span{
+    color:lawngreen;
+}
+
+p.content{
+    background-color:darkgreen;
+    color:white;
+    border: 2px solid black;
+}
+
+img{
+    box-shadow: 2px 2px 2px black;
+}
+
+a{
+    color:black;
+}
+
+a:hover{
+    color:red;
+}
