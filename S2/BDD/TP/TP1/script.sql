@@ -129,5 +129,22 @@ ORDER BY prix_total_TTC DESC;
 -- Requete 8
 SELECT ARTICLE.designation, LIGNE.quantite, COMMANDE.dateCommande, COMMANDE.idCommande
 FROM ARTICLE
-RIGHT JOIN COMMANDE
-ON ARTICLE.idArticle
+INNER JOIN LIGNE
+ON ARTICLE.idArticle=LIGNE.idArticle
+INNER JOIN COMMANDE
+ON COMMANDE.idCommande=LIGNE.idCommande;
+
+-- Requete 9
+SELECT A.designation, L.quantite, YEAR(C.dateCommande) AS anneeCommande, L.idCommande
+FROM LIGNE L
+INNER JOIN COMMANDE C 
+ON L.idCommande = C.idCommande
+INNER JOIN ARTICLE A 
+ON L.idArticle = A.idArticle
+WHERE YEAR(C.dateCommande) = 2023
+AND L.idArticle IN (SELECT DISTINCT idArticle
+FROM LIGNE
+WHERE idCommande IN (
+SELECT idCommande
+FROM COMMANDE
+WHERE YEAR(dateCommande) = 2024));
