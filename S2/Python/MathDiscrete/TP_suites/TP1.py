@@ -1,4 +1,5 @@
 from math import *
+import matplotlib.pyplot as plt
 
 def u1_iteratif(n):
     res = 2.56453
@@ -134,8 +135,6 @@ def convergence_pi():
         print(i, " : ", new)
         i+=1
 
-convergence_pi()
-
 print("\n")
 
 def convergence_pi_mieux():
@@ -149,5 +148,52 @@ def convergence_pi_mieux():
         new = 1/(12*s)
         print(i, " : ", new)
         i+=1
-        
-convergence_pi_mieux()
+
+def graphique(u, nmin, nmax, pas):
+    pointsX = []
+    pointsY = []
+    for i in range(nmin, nmax, pas):
+        pointsX.append(i)
+        pointsY.append(u(i))
+    plt.plot(pointsX, pointsY)
+    plt.grid(True)
+    plt.xlabel("n")
+    plt.ylabel("u(n)")
+    plt.show()
+    
+def graphiquemult(l, nmin, nmax, pas):
+    for u in l:
+        pointsx = []
+        pointsy = []
+        for i in range(nmin, nmax, pas):
+            pointsx.append(i)
+            pointsy.append(u(i))
+        plt.scatter(pointsx, pointsy, marker='+')
+    plt.grid(True)
+    plt.xlabel("n")
+    plt.ylabel("u(n)")
+    plt.show()
+
+def graphiquemultu(l, nmin, nmax, pas):
+    for u in l:
+        pointsx = []
+        pointsy = []
+        for i in range(nmin, nmax, pas):
+            pointsx.append(i)
+            pointsy.append(u[0](i,u[1]))
+        plt.scatter(pointsx, pointsy, marker='+', label=f"Suite r={u[1]}")
+    plt.legend()
+    plt.grid(True)
+    plt.xlabel("n")
+    plt.ylabel("u(n)")
+    plt.show()
+
+def uiter(n, r):
+    u = 0.5
+    for _ in range(n):
+        u = r*u * (1 - u)
+    return u
+
+
+
+graphiquemultu([(uiter, 4.5)], 1, 100, 1)

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/css/style1.css" rel="stylesheet">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script1.js' )}}" charset="UTF-8"></script>
+    <title>Skis</title>
+</head>
+<body onload="getProduct()">
+    <img alt="logo ski" src="static/img/ski.png">
+    <br>
+    <label for="inputCode">Votre code client : </label>
+    <input onchange="getClientDetails(this.value)" type="text" id="inputCode" name="inputCode"  placeholder="Entrez votre nom">
+    <div id="details"></div>
+    <table id="table">
+        <tr>
+            <th id="c11">code prestation</th>
+            <th id="c12">désignation</th>
+            <th id="c13">prix</th>
+            <th id="c14">quantité</th>
+            <th id="c15">montant</th>
+        </tr>
+        <tr>
+            <td id="c21">1</td>
+            <td id="c22">
+            <select onchange="getProductDetails(this.value, 0)" id="designationSelect0">
+            </select>         
+            </td>
+            <td id="c23"></td>
+            <td id="c24"><input type="text"></input></td>
+            <td id="c25">5</td>
+        </tr>
+        <tr>
+            <th id="end31"></th>
+            <th id="end32"></th>
+            <th id="end33"></th>
+            <th id="end34">somme</th>
+            <th id="end35">0€</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>remise</th>
+            <th>10%</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>à regler</th>
+            <th>0€</th>
+        </tr>
+    </table>
+</body>
+</html>
