@@ -111,16 +111,86 @@ WHERE classement.classement=1
 AND station.nomStation LIKE 'Tignes'
 GROUP BY skieur.idSkieur;
 
+-- Requete 7
 SELECT DISTINCT s.nomSkieur
-FROM skieur s
-WHERE NOT EXISTS (
-    SELECT c.idCompetition
-    FROM competition c
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM classement cl
-        WHERE cl.competition_id = c.idCompetition
-        AND cl.skieur_id = s.idSkieur
-        AND cl.classement = 1
-    )
+FROM classement c
+INNER JOIN skieur s
+ON c.skieur_id=s.idSkieur
+WHERE c.classement = 1
+AND s.idSkieur NOT IN (
+    SELECT c.skieur_id
+    FROM classement c
+    WHERE c.classement != 1
 );
+
+
+
+DELETE FROM classement;
+DELETE FROM comporte;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE competition;
+SET FOREIGN_KEY_CHECKS = 1;
+
+LOAD DATA LOCAL INFILE 'donnees/COMPETITIONv2.csv' INTO TABLE competition FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'donnees/COMPORTEv2.csv' INTO TABLE comporte FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'donnees/CLASSEMENTv2.csv' INTO TABLE classement FIELDS TERMINATED BY ',';
+
+
+
+-- Requete 8
+SELECT DISTINCT sk.nomSkieur, cl.classement, st.nomStation, club.nomStation
+FROM classement cl
+INNER JOIN skieur sk
+ON cl.skieur_id=sk.idSkieur
+INNER JOIN competition cp
+ON cl.competition_id=cp.idCompetition
+INNER JOIN station st
+ON cp.station_id=st.idStation
+INNER JOIN station club
+ON sk.station_id=club.idStation
+WHERE sk.idSkieur NOT IN (
+    SELECT c.skieur_id
+    FROM classement c
+    WHERE c.classement > 3
+)
+AND st.nomStation LIKE 'Tignes';
+
+-- Requete 9
+SELECT sk.nomSkieur
+FROM classement cl
+INNER JOIN skieur sk
+ON cl.skieur_id=sk.idSkieur
+INNER JOIN competition cp
+ON cl.competition_id=cp.idCompetition
+INNER JOIN station st
+ON cp.station_id=st.idStation
+INNER JOIN station club
+ON sk.station_id=club.idStation
+WHERE sk.idSkieur NOT IN (
+    SELECT c.skieur_id
+    FROM classement c
+    WHERE c.classement > 3
+)
+AND st.nomStation LIKE club.nomStation
+GROUP BY sk.nomSkieur;
+
+-- Requete 11
+SELECT st.nomStation
+FROM (
+    SELECT st.nomStation, COUNT(sk.idSkieur) nbSkieur
+    FROM skieur sk
+    INNER JOIN station st
+    ON sk.station_id=st.idStation
+    GROUP BY sk.station_id
+) st
+WHERE nbSkieur > 1;
+
+-- Requete 12
+SELECT sk.nomSkieur
+FROM skieur sk
+JOIN (SELECT specialite_id
+FROM skieur
+WHERE nomSkieur LIKE 'paul') p
+WHERE sk.specialite_id = p.specialite_id
+AND sk.nomSkieur NOT LIKE 'paul';
