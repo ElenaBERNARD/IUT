@@ -194,3 +194,57 @@ FROM skieur
 WHERE nomSkieur LIKE 'paul') p
 WHERE sk.specialite_id = p.specialite_id
 AND sk.nomSkieur NOT LIKE 'paul';
+
+-- Requete 13
+INSERT INTO skieur (nomSkieur, specialite_id, station_id) VALUES
+('alphand', 2, 1);
+
+-- Requete 14
+SELECT competition.libelleCompet
+FROM comporte
+INNER JOIN competition
+ON comporte.competition_id = competition.idCompetition
+GROUP BY comporte.competition_id
+HAVING COUNT(comporte.competition_id) >= 4;
+
+-- Requete 15
+SELECT nomSkieur
+FROM skieur
+WHERE station_id = (
+    SELECT station_id
+    FROM skieur
+    WHERE nomSkieur LIKE 'tom')
+AND NOT nomSkieur LIKE 'tom';
+
+-- Requete 16
+SELECT DISTINCT skieur.nomSkieur
+FROM classement
+INNER JOIN skieur
+ON skieur_id=idSkieur
+WHERE classement <= (
+    SELECT MIN(classement)
+    FROM classement
+    INNER JOIN skieur
+    ON skieur_id=idSkieur
+    WHERE nomSkieur LIKE 'tom')
+AND NOT nomSkieur LIKE 'tom';
+
+-- Requete 17
+SELECT DISTINCT skieur.nomSkieur
+FROM classement
+INNER JOIN skieur
+ON skieur_id=idSkieur
+WHERE classement = 1
+AND NOT nomSkieur LIKE 'pierre'
+GROUP BY nomSkieur
+HAVING COUNT(skieur_id) >= (
+    SELECT COUNT(skieur_id)
+    FROM classement
+    INNER JOIN skieur
+    ON skieur_id=idSkieur
+    WHERE classement = 1
+    AND nomSkieur LIKE 'pierre'
+)
+ORDER BY nomSkieur;
+
+-- Requete 18

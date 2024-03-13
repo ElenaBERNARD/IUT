@@ -12,8 +12,11 @@
     <br>
     <label for="inputCode">Votre code client : </label>
     <input onchange="getClientDetails(this.value)" type="text" id="inputCode" name="inputCode"  placeholder="Entrez votre nom">
+    <br><br>
+    <button class="buttonAdd" role="button" onclick="addLine()">+</button>
+    <br><br>
     <div id="details"></div>
-    <table id="table">
+    <table id="table" class="tableNoBorder">
         <tr>
             <th id="c11">code prestation</th>
             <th id="c12">désignation</th>
@@ -22,36 +25,37 @@
             <th id="c15">montant</th>
         </tr>
         <tr>
-            <td id="c21">1</td>
+            <td id="c21"></td>
             <td id="c22">
-            <select onchange="getProductDetails(this.value, 0)" id="designationSelect0">
-            </select>         
+            <select onchange="getProductDetails(this.value, 0)" id="designationSelect0"></select>         
             </td>
             <td id="c23"></td>
-            <td id="c24"><input type="text"></input></td>
-            <td id="c25">5</td>
+            <td id="c24"><input onchange="getProductQuantity(this.value, 0)" type="text"></input></td>
+            <td id="c25"></td>
         </tr>
-        <tr>
-            <th id="end31"></th>
-            <th id="end32"></th>
-            <th id="end33"></th>
-            <th id="end34">somme</th>
+        <tr class="tableNoBorder" id="endTable">
+            <th id="end11" class="tableNoBorder"></th>
+            <th id="end12" class="tableNoBorder"></th>
+            <th id="end13" class="tableNoBorder"></th>
+            <th id="end14">somme</th>
+            <th id="end15">0€</th>
+        </tr>
+        <tr class="tableNoBorder">
+            <th id="end21" class="tableNoBorder"></th>
+            <th id="end22" class="tableNoBorder"></th>
+            <th id="end23" class="tableNoBorder"></th>
+            <th id="end24">remise</th>
+            <th id="end25">10%</th>
+        </tr>
+        <tr class="tableNoBorder">
+            <th id="end31" class="tableNoBorder"></th>
+            <th id="end32" class="tableNoBorder"></th>
+            <th id="end33" class="tableNoBorder"></th>
+            <th id="end34">à regler</th>
             <th id="end35">0€</th>
         </tr>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>remise</th>
-            <th>10%</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>à regler</th>
-            <th>0€</th>
-        </tr>
     </table>
+    
+
 </body>
 </html>
