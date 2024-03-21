@@ -50,3 +50,4 @@ def convergence(f, u0, rang, min, max, pas):
 # Si u0 > 0.7, convergence par oscillations
 
 convergence(fw, 3, 2, -5, 5, 0.1)
+

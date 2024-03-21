@@ -206,7 +206,13 @@ AND r.dateRealisation BETWEEN "2021-09-01" AND "2021-12-31";
 -- |                    2 | macaron chocolat |
 -- |                    1 | macaron marrons  |
 -- +----------------------+------------------+
-
+SELECT COUNT(p.nom) nbMacaronsDifferents, p.nom
+FROM recette r
+INNER JOIN patisserie p
+ON r.idPatisserie=p.idPatisserie
+WHERE p.nom LIKE "%macaron%"
+GROUP BY p.nom
+ORDER BY p.nom ASC;
 
 -- 5. Donner le nom et le prix unitaire de la pâtisserie la plus chère 
 
@@ -216,7 +222,12 @@ AND r.dateRealisation BETWEEN "2021-09-01" AND "2021-12-31";
 -- +-----------------------------------+--------------+
 -- | bûche poires marrons et chocolat  | 41.5         |
 -- +-----------------------------------+--------------+
-
+SELECT nom, prixUnitaire
+FROM patisserie
+WHERE prixUnitaire = (
+    SELECT MAX(prixUnitaire)
+    FROM patisserie
+);
 
 
 -- 6. Donner les pâtissiers qui n’ont jamais réalisé de ’Baba au Rhum’ en 2021.
@@ -228,7 +239,18 @@ AND r.dateRealisation BETWEEN "2021-09-01" AND "2021-12-31";
 -- |          5 | poulain     | leo      |           1965 |
 -- |          6 | perreira    | philippe |           1990 |
 -- +------------+-------------+----------+----------------+
-
+SELECT pe.idPersonne, pe.nomPersonne, pe.prenom, pe.anneeNaissance
+FROM personne pe
+WHERE pe.idPersonne NOT IN (
+    SELECT pe.idPersonne
+    FROM realisation re
+    INNER JOIN personne pe
+    ON re.idPersonne=pe.idPersonne
+    INNER JOIN patisserie pa
+    ON re.idPatisserie=pa.idPatisserie
+    WHERE re.dateRealisation BETWEEN "2021-01-01" AND "2021-12-31"
+    AND pa.nom LIKE "%Baba au Rhum%"
+);
 
 -- 7 : Pour chaque boutique de la ville valdoie, donner le montant en euros des pâtisseries dans le mois de décembre 2021.
 -- Le résultat sera renommé en ’prod12-2021-euros’
@@ -239,6 +261,19 @@ AND r.dateRealisation BETWEEN "2021-09-01" AND "2021-12-31";
 -- | MANTEY          |                  1485 | MANTEY          |
 -- | La RoseMontoise |                 152.5 | La RoseMontoise |
 -- +-----------------+-----------------------+-----------------+
+SELECT bo.nom, SUM(re.nbRealisation*pa.prixUnitaire) AS prod12−2021−euros, bo.nom
+FROM estRattache er
+INNER JOIN boutique bo
+ON er.idBoutique=bo.idBoutique
+INNER JOIN personne pe
+ON er.idPersonne=pe.idPersonne
+INNER JOIN realisation re
+ON pe.idPersonne=re.idPersonne
+INNER JOIN patisserie pa
+ON re.idPatisserie=pa.idPatisserie
+WHERE re.dateRealisation BETWEEN "2021-12-01" AND "2021-12-31"
+AND bo.ville LIKE "%valdoie%"
+GROUP BY bo.nom;
 
 
 -- 8 : Donner le nom et le prix unitaire de la pâtisserie la plus chère pour chaque catégorie de pâtisserie.
@@ -253,16 +288,27 @@ AND r.dateRealisation BETWEEN "2021-09-01" AND "2021-12-31";
 -- | macaron      | macaron marrons                   | 3.5          |
 -- | macaron      | macaron chocolat                  | 3.5          |
 -- +--------------+-----------------------------------+--------------+
-
+SELECT pa.categorie, pa.nom, pa.prixUnitaire
+FROM patisserie pa
+WHERE pa.prixUnitaire IN (
+    SELECT MAX(pa.prixUnitaire)
+    FROM patisserie pa
+    GROUP BY categorie
+)
+ORDER BY pa.prixUnitaire DESC, pa.nom DESC;
 
 -- 9 :   Donner les pâtisseries réalisées par plus de 2 pâtissiers différents en 2021.
-
-
--- ------------------
+SELECT pa.nom
+FROM realisation re
+INNER JOIN patisserie pa
+ON re.idPatisserie = pa.idPatisserie
+GROUP BY re.idPatisserie
+HAVING COUNT(DISTINCT re.idPersonne) >= 2;
 
 
 -- 10 :  Donner les recettes initiales dont on ne connaît pas l’auteur. On précisera le nom de la pâtisserie avec
 -- la recette.
+
 
 -- 11 :  Donner les boutiques de la ville de valdoie qui ont employé le pâtissier ’jean Mantey’. On précisera pour chaque
 -- boutique la date d’embauche et le résultat sera trié par rapport à cette date selon l’ordre chronologique
