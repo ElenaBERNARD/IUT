@@ -298,23 +298,41 @@ WHERE pa.prixUnitaire IN (
 ORDER BY pa.prixUnitaire DESC, pa.nom DESC;
 
 -- 9 :   Donner les pâtisseries réalisées par plus de 2 pâtissiers différents en 2021.
-SELECT pa.nom
-FROM realisation re
+SELECT pa.idPatisserie, pa.nom, pa.categorie, pa.prixUnitaire, COUNT(DISTINCT re.idPersonne) AS nbPersonneDiff
+FROM (SELECT * 
+    FROM realisation re
+    WHERE re.dateRealisation BETWEEN "2021-01-01" AND "2021-12-31") re
 INNER JOIN patisserie pa
 ON re.idPatisserie = pa.idPatisserie
 GROUP BY re.idPatisserie
-HAVING COUNT(DISTINCT re.idPersonne) >= 2;
+HAVING nbPersonneDiff > 2;
 
 
 -- 10 :  Donner les recettes initiales dont on ne connaît pas l’auteur. On précisera le nom de la pâtisserie avec
 -- la recette.
-
+SELECT pa.nom, re.*
+FROM recette re
+INNER JOIN patisserie pa
+ON re.idPatisserie=pa.idPatisserie
+WHERE ISNULL(re.auteur);
 
 -- 11 :  Donner les boutiques de la ville de valdoie qui ont employé le pâtissier ’jean Mantey’. On précisera pour chaque
 -- boutique la date d’embauche et le résultat sera trié par rapport à cette date selon l’ordre chronologique
 -- inverse.
+SELECT bo.*, er.dateEmbauche
+FROM boutique bo
+INNER JOIN estRattache er
+ON bo.idBoutique=er.idBoutique
+INNER JOIN personne pe
+ON er.idPersonne=pe.idPersonne
+WHERE pe.nomPersonne LIKE 'MANTEY' AND pe.prenom LIKE 'Jean' AND bo.ville LIKE 'Valdoie'
+ORDER BY er.dateEmbauche;
 
--- 12 :   Donner les personnes de moins de 40 ans (cette année) qui sont auteurs d’au moins une recette.
+-- 12 :   Donner les personnes de moins de 55 ans (cette année) qui sont auteurs d’au moins une recette.
+SELECT DISTINCT pe.*
+FROM recette re, personne pe
+WHERE '2024'-pe.anneeNaissance <= 55 AND 
+concat(pe.nomPersonne, ' ', pe.prenom) LIKE re.auteur;
 
 -- 13 :    Donner les boutiques n’ayant jamais proposé de pâtisserie à base de Rhum.
 

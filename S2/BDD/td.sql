@@ -56,3 +56,41 @@ INSERT INTO TD_telephone (idTelephone,type_id,marque_id,date_achat,prix,propriet
 (NULL,'SP' ,1,'2013-01-15',189,190622,'ROUGE'),
 (NULL,NULL ,NULL,'2013-01-15',20,190623,'ROUGE'),
 (NULL,NULL ,1,'2013-01-15',NULL,NULL,NULL);
+
+SELECT IFNULL(concat(type_id, ' - ', IFNULL(couleur, 'NC')), 'NV') AS votreFonction
+FROM TD_telephone;
+
+SELECT 
+COALESCE(concat(type_id, ' - ', COALESCE(couleur, 'NC')), 'NV') AS votreFocntion
+FROM TD_telephone;
+
+-- REQUETE 1
+
+SELECT tel.idTelephone, m.libelle , t.libelle , tel.prix , tel.date_achat, DATE_ADD(tel.date_achat, INTERVAL 1 YEAR) AS date_fin_garantie 
+FROM TD_telephone AS tel 
+INNER JOIN TD_type_tel AS t 
+ON tel.type_id = t.idType 
+INNER JOIN TD_marque_tel AS m 
+ON tel.marque_id = m.idMarque 
+ORDER BY tel.date_achat;
+
+-- REQUETE 2
+
+SELECT tel.idTelephone , m.libelle , t.libelle , tel.prix , tel.date_achat , 
+CASE 
+    WHEN m.libelle LIKE ‘%SAMSUNG%’ THEN DATE_ADD(tel.date_achat, INTERVAL 2 YEAR) 
+    WHEN m.libelle like ‘%APPLE%’ THEN DATE_ADD(tel.date_achat, INTERVAL 3 YEAR) 
+    ELSE DATE_ADD(tel.date_achat, INTERVAL 1 YEAR) END 
+    AS date_fin_garantie 
+FROM TD_telephone AS tel 
+INNER JOIN TD_type_tel AS t 
+ON tel.type_id = t.idType 
+INNER JOIN TD_marque_tel AS m 
+ON tel.marque_id = m.idMarque 
+ORDER BY tel.date_achat;
+
+-- REQUETE 3
+
+SELECT tel.proprietaire_id, m.libelle , t.libelle, tel.prix , tel.date_achat , DATEDIFF(CURDATE(), DATE_ADD(tel.date_achat, INTERVAL 2 YEAR)) as calcul_tmp, CASE WHEN m.libelle like ‘%SAMSUNG%’ THEN prix0.07 WHEN m.libelle like ‘%APPLE%’ THEN prix0.1 ELSE prix*0.05 END AS remise FROM TD_telephone AS tel INNER JOIN TD_type_tel AS t ON tel.type_id = t.idType INNER JOIN TD_marque_tel AS m ON tel.marque_id = m.idMarque WHERE prix IS NOT NULL AND DATEDIFF(CURDATE(), DATE_ADD(date_achat, INTERVAL 5 YEAR)) < 0 ORDER BY tel.date_achat;
+
+SELECT tel.proprietaire_id, m.libelle , t.libelle, tel.prix , CONCAT( LPAD(CAST(DAY(date_achat) AS CHAR(2)),2,0),‘/’, LPAD(CAST(MONTH(date_achat) AS CHAR(2)),2,0),‘/’,YEAR(date_achat)) AS DATE_ACHAT_FR FROM TD_telephone AS tel INNER JOIN TD_type_tel AS t ON tel.type_id = t.idType INNER JOIN TD_marque_tel AS m ON tel.marque_id = m.idMarque ORDER BY tel.date_achat;
