@@ -17,4 +17,4 @@ There is no license, it's all done by me and is free to be used by anyone
 
 ## Contact
 
-For any inquiries related to this repository, please contact me.
+For any inquiries related to this repository, please contact me on github.
