@@ -1,6 +1,6 @@
 public class runBibliotheque {
     public static void main(String[] args) {
-        Bibliotheque b = new Bibliotheque(4);
+        Bibliotheque b = new Bibliotheque("Alexandrie");
         
         Document d = new Document("Celeste");
         System.out.println(d);
@@ -24,5 +24,41 @@ public class runBibliotheque {
         b.suprime(d);
 
         System.out.println(b);
+
+        try{
+        System.out.println(b.getDocument(5));
+        }
+        catch(
+            IllegalArgumentException e){
+                System.out.println(e);
+        }
+
+        try{
+            b.retirerDocument(2);
+        } catch(IllegalArgumentException e){
+            System.out.println(e);
+        }
+
+        try{
+            b.retirerDocument(-1);
+        } catch(IllegalArgumentException e){
+            System.out.println(e);
+        }
+
+        try{
+            b.ajouterDocument(l);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        try{
+            b.ajouterDocument(new Document("Doc1"));
+            b.ajouterDocument(new Document("Doc2"));
+            b.ajouterDocument(new Document("Doc4"));
+            b.ajouterDocument(new Document("Doc5"));
+            b.ajouterDocument(new Document("Doc6"));
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 }

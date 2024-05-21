@@ -23,4 +23,12 @@ public class Document {
     public boolean equals(Document d){
         return this.numEnregistrement == d.numEnregistrement && this.titre.equals(d.titre);
     }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 }
