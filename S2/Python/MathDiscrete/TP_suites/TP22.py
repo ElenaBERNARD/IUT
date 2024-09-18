@@ -39,6 +39,7 @@ def zero(f, xmin, xmax):
             xmax = m
         c += 1
     print(f"Done in {c} itterations")
+    print(m)
     return m
 
 
@@ -70,13 +71,60 @@ def g(x):
 
 def h(x):
     return x**3 - 4*x - 11
-test = zero(h, 0, 10)
-print(test, h(test))
+# test = zero(h, 0, 10)
+# print(test, h(test))
 
 def i(x):
     return x - cos(x)
-test = zero(i, 0, 10)
-print(test, i(test))
-print(cos(test))
+# test = zero(i, 0, 10)
+# print(test, i(test))
+# print(cos(test))
 
-affiche(i, 0, 50, 0.01)
+# affiche(i, 0, 50, 0.01)
+
+def derive(f, x):
+    h = 0.00000001
+    return (f(x+h) - f(x))/h
+
+def cube(x):
+    return x**3
+
+# print(derive(cube, 2))
+
+def extremumLocal(f, xmin, xmax):
+    text = ", minimum found at :"
+    c = 0
+    if(derive(f, xmin) > derive(f, xmax)):
+        xmin, xmax = xmax, xmin
+        text = ", maximum found at :"
+    while(abs(xmin - xmax) > 1e-12):
+        m = (xmin+xmax)/2
+        if(derive(f, m) == 0):
+            print(f"Done in {c} itterations" + text)
+            return m, f(m)
+        elif(derive(f, m)*derive(f,xmin) > 0):
+            xmin = m
+        else:
+            xmax = m
+        c += 1
+    print(f"Stopped after {c} itterations" + text)
+    return m, f(m)
+
+def test(x):
+    return -x**2 - 4
+
+# affiche(test, -1, 4, 0.01)
+# print(extremumLocal(test, -1, 2.75))
+
+# PREPA EXAM :
+
+def fonction(x):
+    return x**5 - 3*x**4 + 2*x**3 + 5*x**2 - 7*x + 2
+
+zero(fonction, -1.5, -1)
+zero(fonction, 0, 0.5)
+zero(fonction, 0.7, 1.2)
+
+print(extremumLocal(fonction, -0.5, 1))
+
+affiche(fonction, -2, 3, 0.01)
