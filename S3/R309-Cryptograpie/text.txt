@@ -1,0 +1,2 @@
+Ceci est un fichier texte utilisant la BASE 64
+Texte et texte pck pourquoi pas
