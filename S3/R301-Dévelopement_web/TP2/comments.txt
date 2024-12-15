@@ -1,0 +1,10 @@
+nvm use 20
+node -v
+
+npm init --y
+
+nodemon
+npm install --save-dev nodemon
+
+touch index.js
+touch notes.js
