@@ -79,7 +79,16 @@ Cell *listPrepend(List *l, int value)
 
 Cell *listInsert(List *l, int value, int index)
 {
-    if (index >= l->size) {
+    if (index < 0)
+        index = 0;
+
+    Cell* newCell = createCell(value);
+
+    if (l->size == 0) {
+        l->head = newCell;
+        newCell->next = newCell->prev = newCell;
+    }
+    else if (index >= l->size) {
         index = l->size - 1;
         Cell* c = listGet(l, index);
         Cell* newCell = createCell(value);
@@ -89,13 +98,6 @@ Cell *listInsert(List *l, int value, int index)
         l->head->prev = newCell;
         l->size++;
         return newCell;
-    } else if (index < 0) {
-        index = 0;
-    }
-    Cell* newCell = createCell(value);
-    if (l->size == 0) {
-        l->head = newCell;
-        newCell->next = newCell->prev = newCell;
     } else {
         Cell* c = listGet(l, index);
         newCell->prev = c->prev;

@@ -1,5 +1,3 @@
-import javax.swing.CellEditor;
-
 public class ListDoubleCirc {
  
     public CellDouble head;
@@ -83,7 +81,16 @@ public class ListDoubleCirc {
     public CellDouble insert(int value, int index) {
         // on a get() pour trouver la cellule du point d'insertion
         // Seul cas particulier, la liste est vide
-        if(index >= size){
+        if (index < 0)
+            index = 0;
+        if(size == 0){
+            CellDouble newCell = new CellDouble(value);
+            head = newCell;
+            head.next = head;
+            head.prev = head;
+            return head;
+        }
+        else if(index >= size) {
             index = size - 1;
             CellDouble c = get(index);
             CellDouble newCell = new CellDouble(value);
@@ -94,26 +101,16 @@ public class ListDoubleCirc {
             size++;
             return newCell;
         }
-        else if(index < 0)
-            index = 0;
-
 
         CellDouble newCell = new CellDouble(value);
-        
-        if(size == 0){
+
+        CellDouble c = get(index);
+        newCell.prev = c.prev;
+        newCell.next = c;
+        c.prev.next = newCell;
+        c.prev = newCell;
+        if (index == 0)
             head = newCell;
-            head.next = head;
-            head.prev = head;
-        }
-        else{
-            CellDouble c = get(index);
-            newCell.prev = c.prev;
-            newCell.next = c;
-            c.prev.next = newCell;
-            c.prev = newCell;
-            if(index == 0)
-                head = newCell;
-        }
         size++;
         return newCell;
     }

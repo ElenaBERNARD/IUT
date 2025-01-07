@@ -1,0 +1,12 @@
+-- POTRGERSQL FILE FOR TESTING
+DROP TABLE IF EXISTS test;
+
+CREATE TABLE test (
+    id INT PRIMARY KEY SERIAL,
+    name TEXT
+);
+
+INSERT INTO test (name) VALUES ('test');
+INSERT INTO test (name) VALUES ('test2');
+
+SELECT * FROM test;
