@@ -3,6 +3,15 @@ const keys = require('./config/keys');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieSeesion = require('cookie-session');
+const mongoose = require('mongoose');
+
+require('./models/User');
+require('./models/Blog');
+
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 
 const app = express();
