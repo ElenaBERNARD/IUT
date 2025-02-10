@@ -4,9 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieSeesion = require('cookie-session');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 require('./models/User');
 require('./models/Blog');
+require('./services/passport');
 
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
@@ -28,7 +30,8 @@ app.use(cookieSeesion({
   maxAge: 30 * 24 * 60 * 60 * 1000,
   keys: [keys.cookieKey]
 }));
-
+app.use(passport.initialize());
+app.use(passport.session());
 
 // TODO SWAGGER DOC
 
