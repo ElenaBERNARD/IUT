@@ -1,0 +1,32 @@
+# Le nombre de parametre, ici 2, x1 et x2
+param n;
+# Les valeurs maximal des contraintes
+param values{i in 1..3};
+# Les facteurs des variables de decisions
+param factors{i in 1..3, j in 1..n};
+# Les facteurs de la fonction objectif
+param objective{i in 1..n};
+# Les varibales de decisions
+var x {1..n}, integer,>=0;
+
+subject to C1 {i in 1..3} : sum {j in 1..n} factors[i,j]*x[j] <= values[i];
+# L'objectif minimise le cout
+minimize obj : sum {i in 1..n} objective[i]*x[i];
+
+solve;
+
+display factors, x;
+
+data;
+# Deux variables de decisions
+param n := 2;
+# Sous forme canonique, il faut avoir une forme ineq <= n
+# Ici, toutes les inequations sont "a l'envers", on les inverses en multipliant par -1
+param values:= 1 -15 2 -20 3 -30;
+param factors: 1 2 :=
+  1 -3 -1
+  2 -1 -5
+  3 -3 -2;
+# L'objectif ne change pas de sens
+param objective := 1 120 2 60;
+end;

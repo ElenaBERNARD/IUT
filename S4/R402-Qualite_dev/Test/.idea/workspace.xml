@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ed671054-931b-409b-add6-8cc3ae5db53d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/data/Datasource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/data/Datasource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/model/Dessert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/model/Dessert.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/ui/theme/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/ui/theme/Color.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/ui/theme/Theme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/app/src/main/java/com/example/dessertclicker/ui/theme/Theme.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/DessertClicker/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/Unscramble/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/Unscramble/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/Unscramble/app/src/main/java/com/example/unscramble/ui/GameScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/Unscramble/app/src/main/java/com/example/unscramble/ui/GameScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/Unscramble/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/Unscramble/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DevAndroid/Unscramble/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../DevAndroid/Unscramble/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project/CodeSecret/src/main/java/CodeSecret.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mockito_core.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Purse.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/CodeBloqueException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/CodeFauxException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/CodeSecret.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/DepassementPlafondInterdit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/FinDeVieException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/MontantNegatifInterdit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/MotifRejetTransactionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/Purse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/izly/SoldeNegatifInterdit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/izly/CodeSecretUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/izly/PurseUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../R403-NoSQL/TP4/S4_MONGOOSE_OAUTH/S4_MONGOOSE_OAUTH/config/dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../R403-NoSQL/TP4/S4_MONGOOSE_OAUTH/S4_MONGOOSE_OAUTH/config/dev.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../R403-NoSQL/TP4/S4_MONGOOSE_OAUTH/S4_MONGOOSE_OAUTH/routes/blogRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../R403-NoSQL/TP4/S4_MONGOOSE_OAUTH/S4_MONGOOSE_OAUTH/routes/blogRoutes.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2swkeUIIu1d7A5UyENmIYfXrk8G" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ed671054-931b-409b-add6-8cc3ae5db53d" name="Changes" comment="" />
+      <created>1739374121470</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739374121470</updated>
+    </task>
+    <servers />
+  </component>
+</project>
