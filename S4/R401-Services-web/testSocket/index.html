@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Socket.IO Chat</title>
+</head>
+
+<body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+        <!-- Model selection dropdown -->
+        <select id="model-selector">
+            <option value="deepscaler">DeepScaler</option>
+            <option value="deepseek-r1:1.5b">DeepSeek R1</option>
+            <option value="llama3.2">Llama 3.2</option>
+            <option value="deepseek-coder">DeepSeekCoder</option>
+        </select>
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        const messages = document.getElementById('messages');
+        const modelSelector = document.getElementById('model-selector'); // Model selector
+
+        let currentUserMessageElement = null;
+        let currentAIMessageElement = null;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (input.value) {
+                // Get the selected model from the dropdown
+                const selectedModel = modelSelector.value;
+
+                // Create a new message element for the user's message
+                currentUserMessageElement = document.createElement('li');
+                currentUserMessageElement.textContent = `You: ${input.value}`;
+                messages.appendChild(currentUserMessageElement);
+
+                // Emit the user's message along with the selected model
+                socket.emit('chat message', { message: input.value, model: selectedModel });
+                input.value = '';
+
+                // Create a new message element for the AI's response (this will be updated later)
+                currentAIMessageElement = document.createElement('li');
+                currentAIMessageElement.textContent = ``;
+                messages.appendChild(currentAIMessageElement);
+            }
+        });
+
+        // Listen for the AI's streaming response and update the message dynamically
+        socket.on('chat message', (msg) => {
+            if (currentAIMessageElement) {
+                // Append the incoming data chunk to the current AI message
+                currentAIMessageElement.innerHTML = `${marked.parse(msg)}`;
+
+                // Scroll to the bottom of the page to show the new updates
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        });
+    </script>
+
+</body>
+<style>
+    body {
+        margin: 0;
+        padding: 100;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    #form {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+    }
+
+    #input {
+        border: none;
+        padding: 0 1rem;
+        flex-grow: 1;
+        border-radius: 2rem;
+        margin: 0.25rem;
+    }
+
+    #input:focus {
+        outline: none;
+    }
+
+    #form>button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 3px;
+        outline: none;
+        color: #fff;
+    }
+
+    #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #messages>li {
+        padding: 0.5rem 1rem;
+    }
+
+    #messages>li:nth-child(odd) {
+        background: #efefef;
+    }
+
+    #model-selector {
+        margin-right: 10px;
+    }
+</style>
+</html>
