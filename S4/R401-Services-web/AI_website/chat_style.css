@@ -1,0 +1,49 @@
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user, .ai {
+    max-width: 70%;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 15px;
+    word-wrap: break-word;
+}
+
+/* Messages de l'utilisateur */
+.user {
+    background-color: #0078D4;
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+    text-align: left;
+    border-top-right-radius: 0;
+}
+
+/* Messages de l'IA */
+.ai {
+    background-color: #E5E5EA;
+    color: black;
+    align-self: flex-start;
+    margin-right: auto;
+    text-align: left;
+    border-top-left-radius: 0;
+}
+
+/* Permet d'afficher les messages en colonne */
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.thinking {
+    display: block;
+    font-style: italic;
+    color: #888;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #0078D4;
+    margin: 5px 0;
+}
