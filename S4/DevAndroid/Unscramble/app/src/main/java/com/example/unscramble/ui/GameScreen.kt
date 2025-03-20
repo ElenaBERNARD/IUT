@@ -17,9 +17,13 @@ package com.example.unscramble.ui
 
 import android.app.Activity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -28,10 +32,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -41,9 +50,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -52,11 +64,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unscramble.R
 import com.example.unscramble.ui.theme.UnscrambleTheme
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+
 
 @Composable
 fun GameScreen(
@@ -81,8 +92,10 @@ fun GameScreen(
         )
         GameLayout(
             currentScrambledWord = gameUiState.currentScrambledWord,
+            currentHint = gameUiState.currentHint,
             userGuess = gameViewModel.userGuess,
             wordCount = gameUiState.currentWordCount,
+            hints = gameUiState.hints,
             onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
             onKeyboardDone = { gameViewModel.checkUserGuess() },
             isGuessWrong = gameUiState.isGuessedWordWrong,
@@ -118,6 +131,25 @@ fun GameScreen(
                     fontSize = 16.sp
                 )
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                enabled = gameViewModel.isHintAvailable(),
+                onClick = { gameViewModel.hintCurrentWord() }
+            ) {
+                Text(
+                    text = stringResource(R.string.hint),
+                    fontSize = 16.sp
+                )
+            }
+            Text(
+                text = stringResource(R.string.hint_explanation),
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
+                color = Color.Gray
+            )
         }
 
         GameStatus(score = gameUiState.score, modifier = Modifier.padding(20.dp))
@@ -125,6 +157,7 @@ fun GameScreen(
     if (gameUiState.isGameOver) {
         FinalScoreDialog(
             score = gameUiState.score,
+            hints = gameUiState.hints,
             onPlayAgain = { gameViewModel.resetGame() }
         )
     }
@@ -147,11 +180,13 @@ fun GameStatus(score: Int, modifier: Modifier = Modifier) {
 fun GameLayout(
 
     currentScrambledWord: String,
+    currentHint: String,
     isGuessWrong: Boolean,
     userGuess: String,
     onUserGuessChanged: (String) -> Unit,
     onKeyboardDone: () -> Unit,
     wordCount: Int,
+    hints: Int,
     modifier: Modifier = Modifier
 ) {
     val mediumPadding = dimensionResource(R.dimen.padding_medium)
@@ -166,20 +201,48 @@ fun GameLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(mediumPadding)
         ) {
-            Text(
-                modifier = Modifier
-                    .clip(shapes.medium)
-                    .background(colorScheme.surfaceTint)
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
-                    .align(alignment = Alignment.End),
-                text = stringResource(R.string.word_count, wordCount),
-                style = typography.titleMedium,
-                color = colorScheme.onPrimary
-            )
-            Text(
-                text = currentScrambledWord,
-                fontSize = 45.sp,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier
+                        .clip(shapes.medium)
+                        .background(colorScheme.surfaceTint)
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                ) {
+                    Text(
+                        modifier = Modifier,
+                        text = stringResource(R.string.hints, hints),
+                        style = typography.titleMedium,
+                        color = colorScheme.onPrimary,
+                    )
+                    Icon(Icons.Outlined.Star, contentDescription = "Hints", tint = Color.Yellow)
+                }
+                Text(
+                    modifier = Modifier
+                        .clip(shapes.medium)
+                        .background(colorScheme.surfaceTint)
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                    text = stringResource(R.string.word_count, wordCount),
+                    style = typography.titleMedium,
+                    color = colorScheme.onPrimary
+                )
+            }
+
+            Row()
+            {
+                Text(
+                    text = currentHint,
+                    fontSize = 45.sp,
+                    color = Color.Green
+                )
+                Text(
+                    text = currentScrambledWord,
+                    fontSize = 45.sp,
+                )
+            }
             Text(
                 text = stringResource(R.string.instructions),
                 textAlign = TextAlign.Center,
@@ -221,19 +284,18 @@ fun GameLayout(
 @Composable
 private fun FinalScoreDialog(
     score: Int,
+    hints: Int,
     onPlayAgain: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val activity = (LocalContext.current as Activity)
 
     AlertDialog(
-        onDismissRequest = {
-            // Dismiss the dialog when the user clicks outside the dialog or on the back
-            // button. If you want to disable that functionality, simply use an empty
-            // onCloseRequest.
-        },
+        onDismissRequest = onPlayAgain,
         title = { Text(text = stringResource(R.string.congratulations)) },
-        text = { Text(stringResource(R.string.you_scored, score)) },
+        text = {
+            Text(stringResource(R.string.you_scored, score) + "\n" + stringResource(R.string.hint_used, hints))
+               },
         modifier = modifier,
         dismissButton = {
             TextButton(

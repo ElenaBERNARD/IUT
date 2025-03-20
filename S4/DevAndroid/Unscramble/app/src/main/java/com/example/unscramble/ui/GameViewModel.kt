@@ -65,9 +65,35 @@ class GameViewModel : ViewModel() {
         return String(tempWord)
     }
 
+    fun hintCurrentWord(): String {
+        val tempWord = currentWord.toCharArray()
+
+        //Reveal only part of the word
+        var n = 3
+        if (currentWord.length <= 5) n = 2 // If the word has less than 5 letters, only 2 will be revealed.
+
+        val firstThree = currentWord.take(n) // Extract the first three letters
+        val remainingChars = currentWord.drop(n).toCharArray() // Get the remaining letters as a CharArray
+
+        do {
+            remainingChars.shuffle()
+        } while (remainingChars.contentEquals(tempWord.copyOfRange(n, currentWord.length))) // Ensure it's different from the original
+
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                currentHint = firstThree,
+                currentScrambledWord = String(remainingChars),
+                hints = _uiState.value.hints + 1,
+                score = _uiState.value.score - 5
+            )
+        }
+        return firstThree + String(remainingChars)
+    }
+
     fun resetGame() {
         usedWords.clear()
-        _uiState.value = GameUiState(currentScrambledWord = pickRandomWordAndShuffle())
+        _uiState.value = GameUiState(currentScrambledWord = pickRandomWordAndShuffle(), currentHint = "")
     }
 
     private fun updateGameState(updatedScore: Int) {
@@ -86,6 +112,7 @@ class GameViewModel : ViewModel() {
                 currentState.copy(
                     isGuessedWordWrong = false,
                     currentScrambledWord = pickRandomWordAndShuffle(),
+                    currentHint = "",
                     currentWordCount = currentState.currentWordCount.inc(),
                     score = updatedScore
                 )
@@ -97,6 +124,10 @@ class GameViewModel : ViewModel() {
         updateGameState(_uiState.value.score)
         // Reset user guess
         updateUserGuess("")
+    }
+
+    fun isHintAvailable(): Boolean {
+        return _uiState.value.hints < 3;
     }
 
 
