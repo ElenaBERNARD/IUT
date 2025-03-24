@@ -43,6 +43,7 @@ export default {
                     commit("setCurrentOrganisation", result.data[0])
                     return result.data[0]
                 } else {
+                    commit("setCurrentOrganisation", null)
                     console.log(result.data)
                 }
 

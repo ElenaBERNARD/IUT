@@ -1,0 +1,155 @@
+<template>
+  <v-app>
+
+    <EventDialog
+        :show="show"
+        :title="titleDialog"
+        text="confirmation"
+        width="600"
+        @closeDialog="getAnswerAndClose"
+    >
+    </EventDialog>
+
+    <PromiseDialog
+        ref="dialog2"
+        :title="titleDialog"
+        text="confirmation"
+        width="600">
+    </PromiseDialog>
+
+
+    <v-app-bar
+        app
+        color="primary"
+        dark
+    >
+      Compléments Web : TD 2 demo 1
+    </v-app-bar>
+
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-checkbox @click="manageCheck1" label="rendre actif le bouton 1" :value="checked1" :disabled="checked1"></v-checkbox>
+          <v-btn @click="manageButton1" :disabled="!checked1">decocher check1 (via dialogue classique)</v-btn>
+        </v-row>
+        <v-row>
+          <v-checkbox @click="manageCheck2" label="rendre actif le bouton 2" :value="checked2" :disabled="checked2"></v-checkbox>
+          <v-btn @click="manageButton2" :disabled="!checked2">decocher checked 2 (via dialogue+promise)</v-btn>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
+</template>
+
+<script>
+
+import PromiseDialog from "@/components/PromiseDialog";
+import EventDialog from "@/components/EventDialog";
+
+export default {
+  name: 'App',
+  components: {
+    PromiseDialog, EventDialog
+  },
+  data: () => ({
+    show: false,
+    titleDialog:'',
+    checked1: false,
+    checked2: false,
+    /* Pb : l'instance d'EventDialog peut être affichée grâce à 2 interactions
+    Or, il n'est pas possible de modifier dynamiquement l'expression associée
+    à la capture de click. Dans le cas présent cette expression est un appel de fonction.
+    Cette fonction doit donc faire un traitement différent selon l'interaction qui a causé
+    l'apparition du dialogue. C'est pourquoi on utilise une variable supplémentaire dans data
+    pour représenter le type d'interaction.
+
+    L'autre solution consisterait à créer 2 instances de EventDialog avec chacune un gestionnnaire
+    d'événement propre.
+
+    La "meilleure" solution consiste à utiliser un dialogue à base de promesse, qui permet de récupérer
+    une valeur retournée par le dialogue (cf. PromiseDialog)
+
+     */
+    idInteraction:0, // si =0, EventDialog est montré pour gérer check1, si =1 pour gérer dialog1
+  }),
+  methods: {
+    logtest(event) {
+      console.log("event in testcomp: "+event)
+    },
+    closeForCheck1(answer) {
+      if (answer) {
+        console.log("confirmation OK pour check1")
+        this.checked1 = true
+      }
+      else {
+        console.log("confirmation annulée pour check1")
+      }
+      this.show = false
+    },
+    closeForButton1(answer) {
+      if (answer) {
+        console.log("confirmation OK pour button1")
+        this.checked1 = false
+      }
+      else {
+        console.log("confirmation annulée pour button1")
+      }
+    },
+    getAnswerAndClose(answer) {
+      if (this.idInteraction === 0) {
+        this.closeForCheck1(answer)
+      }
+      else {
+        this.closeForButton1(answer)
+      }
+      this.show = false
+    },
+    async manageCheck1() {
+      // change l'état du composant v-check-box => rafraichissement dans le DOM
+      this.checked1 = true
+      // attend le rafraichissement dans le DOM du composant v-check-box
+      await this.$nextTick()
+      // remet à false, afin que la case soit décochée, en attenant la réponse du dialogue
+      this.checked1 = false
+      this.titleDialog = "gérer interaction check 1 via event"
+      // on précise le type d'interaction : 0= click checkbox
+      this.idInteraction = 0
+      this.show = true
+    },
+    manageButton1() {
+      this.titleDialog = "gérer interaction dialogue 1 via event"
+      // on précise le type d'interaction : 1= click bouton
+      this.idInteraction = 1
+      this.show = true
+    },
+    async manageCheck2() {
+      // change l'état du composant v-check-box => rafraichissement dans le DOM
+      this.checked2 = true
+      // attend le rafraichissement dans le DOM du composant v-check-box
+      await this.$nextTick()
+      // remet à false, afin que la case soit décochée, en attenant la réponse du dialogue
+      this.checked2 = false
+      this.titleDialog = "gérer interaction check 2 via await sur promesse"
+      let answer = await this.$refs.dialog2.open()
+      if (answer) {
+        console.log("confirmation OK pour check 2")
+        this.checked2 = true
+      }
+      else {
+        console.log("confirmation annulée pour check 2")
+      }
+    },
+    async manageButton2() {
+      this.titleDialog = "gérer interaction button 2 via await sur promesse"
+      let answer = await this.$refs.dialog2.open()
+      if (answer) {
+        console.log("confirmation OK pour button 2")
+        this.checked2 = false
+      }
+      else {
+        console.log("confirmation annulée pour button 2")
+      }
+    }
+  }
+};
+</script>

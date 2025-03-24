@@ -19,7 +19,7 @@
         <v-row v-if="currentOrganisation && currentOrganisation.teams && currentOrganisation.teams.length">
             <v-col v-for="team in currentOrganisation.teams" :key="team._id" cols="12" md="6">
                 <v-card class="pa-3">
-                    <v-card-title>{{ team.name }}</v-card-title>
+                    <v-card-title>{{ team.name || "Team name" }}</v-card-title>
 
                     <v-divider></v-divider>
 
@@ -84,7 +84,7 @@ export default {
     },
 
     methods: {
-        ...mapActions('org', ['removeTeam', 'addTeam']),
+        ...mapActions('org', ['removeTeam', 'addTeam', 'getOrganisation']),
         ...mapActions('team', ['getTeams']),
         ...mapMutations('team', ['setCurrentTeam']),
 
@@ -114,6 +114,7 @@ export default {
         openAddTeamDialog() {
             this.$refs.addTeamRef.openDialog((team) => {
                 this.addTeam(team);
+                
             }, 
             this.availableTeams,
             'Add Team to Organisation');
@@ -126,7 +127,7 @@ export default {
 
     watch: {
         currentOrganisation() {
-            this.getTeams();
+            this.getOrganisation(this.currentOrganisation._id);
         },
     }
 };
