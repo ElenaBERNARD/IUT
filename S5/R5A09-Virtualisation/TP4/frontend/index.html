@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mini Site</title>
+	</head>
+	<body>
+		<h1>Liste des utilisateurs</h1>
+		<ul id="users"></ul>
+
+		<script>
+			fetch("http://3000/users")
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					const ul = document.getElementById("users");
+					data.forEach((user) => {
+						const li = document.createElement("li");
+						li.textContent = user.name;
+						ul.appendChild(li);
+					});
+				});
+		</script>
+	</body>
+</html>
