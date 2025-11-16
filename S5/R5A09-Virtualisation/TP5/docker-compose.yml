@@ -1,0 +1,42 @@
+services:
+    db:
+        image: postgres:15-alpine
+        container_name: nextcloud-db
+        restart: unless-stopped
+        hostname: nextcloud-postgres
+        # Volume pour la database PostgreSQL
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: database
+            POSTGRES_USER: elena
+            POSTGRES_PASSWORD: mdp
+        networks:
+            - nextcloud-net
+
+    app:
+        image: nextcloud:apache
+        container_name: nextcloud-app
+        restart: unless-stopped
+        ports:
+            - 8081:80 # Mon port 8080 etait deja utilise
+        depends_on:
+            - db
+        # Volume pour la persistance des fichiers Nextcloud
+        volumes:
+            - nextcloud_data:/var/www/html
+        environment:
+            POSTGRES_HOST: nextcloud-postgres
+            POSTGRES_DB: database
+            POSTGRES_USER: elena
+            POSTGRES_PASSWORD: mdp
+        networks:
+            - nextcloud-net
+
+volumes:
+    db_data:
+    nextcloud_data:
+
+networks:
+    nextcloud-net:
+        external: true

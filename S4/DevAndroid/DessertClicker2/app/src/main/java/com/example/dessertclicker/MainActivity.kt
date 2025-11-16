@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.Icon
@@ -168,6 +169,8 @@ private fun DessertClickerApp(
         DessertClickerScreen(
             revenue = uiState.revenue,
             dessertsSold = uiState.dessertsSold,
+            nextProductionAmount = uiState.nextProductionAmount,
+            dessertPrice = uiState.currentDessertPrice,
             dessertImageId = uiState.currentDessertImageId,
             onDessertClicked = onDessertClicked,
             modifier = Modifier.padding(contentPadding)
@@ -210,6 +213,8 @@ private fun AppBar(
 fun DessertClickerScreen(
     revenue: Int,
     dessertsSold: Int,
+    nextProductionAmount: Int,
+    dessertPrice: Int,
     @DrawableRes dessertImageId: Int,
     onDessertClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -237,7 +242,7 @@ fun DessertClickerScreen(
                     contentScale = ContentScale.Crop,
                 )
             }
-            TransactionInfo(revenue = revenue, dessertsSold = dessertsSold)
+            TransactionInfo(revenue = revenue, dessertsSold = dessertsSold, nextProductionAmount = nextProductionAmount, dessertPrice = dessertPrice)
         }
     }
 }
@@ -246,13 +251,22 @@ fun DessertClickerScreen(
 private fun TransactionInfo(
     revenue: Int,
     dessertsSold: Int,
+    nextProductionAmount: Int,
+    dessertPrice: Int,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .background(Color.White),
     ) {
-        DessertsSoldInfo(dessertsSold)
+        Column(
+            modifier = Modifier
+                .padding(16.dp),
+            ) {
+            DessertsSoldInfo(dessertsSold, nextProductionAmount)
+            DessertPriceInfo(dessertPrice)
+        }
+        Spacer(modifier = modifier.height(10.dp))
         RevenueInfo(revenue)
     }
 }
@@ -278,11 +292,10 @@ private fun RevenueInfo(revenue: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun DessertsSoldInfo(dessertsSold: Int, modifier: Modifier = Modifier) {
+private fun DessertsSoldInfo(dessertsSold: Int, nextProductionAmount: Int, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
@@ -290,8 +303,28 @@ private fun DessertsSoldInfo(dessertsSold: Int, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.h6
         )
         Text(
-            text = dessertsSold.toString(),
+            text = "$dessertsSold/$nextProductionAmount",
             style = MaterialTheme.typography.h6
+        )
+    }
+}
+
+@Composable
+private fun DessertPriceInfo(dessertPrice: Int, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(
+            text = stringResource(R.string.dessert_price),
+            style = MaterialTheme.typography.h6,
+            color = Color.Gray
+        )
+        Text(
+            text = "$$dessertPrice",
+            style = MaterialTheme.typography.h6,
+            color = Color.Gray
         )
     }
 }

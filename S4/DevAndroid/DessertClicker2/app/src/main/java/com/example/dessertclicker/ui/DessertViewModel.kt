@@ -32,6 +32,11 @@ class DessertViewModel : ViewModel() {
         for (index in dessertList.indices) {
             if (dessertsSold >= dessertList[index].startProductionAmount) {
                 dessertIndex = index
+                _dessertUiState.update { cupcakeUiState ->
+                    cupcakeUiState.copy(
+                        nextProductionAmount = dessertList[(index+1)% dessertList.size].startProductionAmount
+                    )
+                }
             } else {
                 // The list of desserts is sorted by startProductionAmount. As you sell more
                 // desserts, you'll start producing more expensive desserts as determined by

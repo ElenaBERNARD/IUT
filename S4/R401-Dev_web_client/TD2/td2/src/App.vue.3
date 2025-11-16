@@ -1,0 +1,51 @@
+<template>
+  <v-app>
+
+    <ErrorDialog
+        title="ERROR"
+        width="600"
+    >
+    </ErrorDialog>
+
+    <v-app-bar
+        app
+        color="primary"
+        dark
+    >
+      <v-app-bar-title>Compléments Web : TD 2 demo 3</v-app-bar-title>
+      <v-spacer></v-spacer>
+      <v-btn :disabled="auth" to="login">Login</v-btn>
+      <v-btn :disabled="!auth" @click="doLogout">Logout</v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <v-container>
+        <TD1Demo3></TD1Demo3>
+      </v-container>
+    </v-main>
+  </v-app>
+</template>
+
+<script>
+
+import ErrorDialog from "@/components/ErrorDialog";
+import TD1Demo3 from "@/components/TD1Demo3";
+import {mapState, mapActions} from "vuex";
+export default {
+  name: 'App',
+  components: {
+    TD1Demo3,
+    ErrorDialog,
+  },
+  computed: {
+    ...mapState('auth',['auth'])
+  },
+  methods: {
+    ...mapActions('auth',['logout']),
+    doLogout() {
+      this.logout()
+      this.$router.push('/')
+    }
+  }
+};
+</script>

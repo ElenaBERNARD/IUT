@@ -1,0 +1,41 @@
+<template>
+  <v-app>
+
+    <ErrorDialog
+        title="ERROR"
+        width="600"
+    >
+    </ErrorDialog>
+
+    <v-app-bar
+        app
+        color="primary"
+        dark
+    >
+      <v-app-bar-title>Compléments Web : TD 2 demo 2</v-app-bar-title>
+      <v-spacer></v-spacer>
+      <v-btn to="checkfirstname">Check your firstname</v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <v-container>
+        <TD1Demo2></TD1Demo2>
+      </v-container>
+    </v-main>
+  </v-app>
+</template>
+
+<script>
+
+import ErrorDialog from "@/components/ErrorDialog";
+import TD1Demo2 from "@/components/TD1Demo2";
+export default {
+  name: 'App',
+  components: {
+    TD1Demo2,
+    ErrorDialog,
+  },
+  data: () => ({
+  }),
+};
+</script>

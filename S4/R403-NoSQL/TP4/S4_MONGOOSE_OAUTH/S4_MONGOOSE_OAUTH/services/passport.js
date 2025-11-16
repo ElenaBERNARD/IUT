@@ -25,21 +25,22 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const existingUser = await User.findOne(
-                    { googleId: profile.id }
-                );
-                if (existingUser) {
-                    return done(null, existingUser);
-                }
-                const user = await new User(
-                    {
-                        googleId: profile.id,
-                        displayName: profile.displayName
-                    }).save();
-                done(null, user);
-            } catch (err) {
-                done(err, null);
+                const existingUser = await User.findOne({ googleId: profile.id });
 
+                if (existingUser) {
+                    return done(null, existingUser);  // L'utilisateur existe déjà
+                }
+
+                // Création d'un nouvel utilisateur avec la photo de profil
+                const user = await new User({
+                    googleId: profile.id,
+                    displayName: profile.displayName,
+                    profilePicture: profile.photos[0].value  // Récupérer la photo de profil
+                }).save();
+
+                done(null, user);  // Retourner l'utilisateur créé
+            } catch (err) {
+                done(err, null);  // Gérer les erreurs
             }
         }
     )

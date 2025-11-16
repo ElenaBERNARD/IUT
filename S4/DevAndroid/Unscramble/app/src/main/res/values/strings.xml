@@ -15,16 +15,20 @@
   -->
 
 <resources>
-    <string name="app_name">Unscramble</string>
-    <string name="instructions">Unscramble the word using all the letters.</string>
-    <string name="skip">Skip</string>
-    <string name="submit">Submit</string>
-    <string name="score">Score: %d</string>
+    <string name="app_name">Méli-Mélo</string>
+    <string name="instructions">Reconstituez le mot en utilisant toutes les lettres.</string>
+    <string name="hint_explanation">Utilisez un indice pour reveler le debut du mot. Utiliser un indice vous fait perdre 5 points.</string>
+    <string name="skip">Passer</string>
+    <string name="hint">Indice</string>
+    <string name="submit">Valider</string>
+    <string name="score">Score : %d</string>
     <string name="word_count">%d/10</string>
-    <string name="enter_your_word">Enter your word</string>
-    <string name="congratulations">Congratulations!</string>
-    <string name="you_scored">"You scored: %d"</string>
-    <string name="exit">Exit</string>
-    <string name="play_again">Play Again</string>
-    <string name="wrong_guess">Wrong Guess!</string>
+    <string name="hints">%d/3</string>
+    <string name="enter_your_word">Entrez votre mot</string>
+    <string name="congratulations">Félicitations !</string>
+    <string name="you_scored">Vous avez marqué : %d</string>
+    <string name="hint_used">Indices utilisés : %d</string>
+    <string name="exit">Quitter</string>
+    <string name="play_again">Rejouer</string>
+    <string name="wrong_guess">Mauvaise réponse !</string>
 </resources>

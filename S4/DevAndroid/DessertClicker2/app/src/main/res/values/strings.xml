@@ -16,6 +16,7 @@
 <resources>
     <string name="app_name">Dessert Clicker</string>
     <string name="dessert_sold">Desserts sold</string>
+    <string name="dessert_price">Dessert price</string>
     <string name="total_revenue">Total Revenue</string>
     <string name="share">Share</string>
     <string name="share_text">I\'ve clicked %1$d Desserts for a total of $%2$d #AndroidDessertClicker</string>
