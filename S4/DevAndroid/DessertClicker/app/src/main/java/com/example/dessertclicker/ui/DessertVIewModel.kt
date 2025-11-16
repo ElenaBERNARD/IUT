@@ -14,17 +14,17 @@ class DessertViewModel : ViewModel() {
     val dessertUiState: StateFlow<DessertUiState> = _dessertUiState.asStateFlow()
 
     fun onDessertClicked() {
-       _dessertUiState.update { cupcakeUiState ->
-           val dessertsSold = cupcakeUiState.dessertsSold + 1
-           val nextDessertIndex = determineDessertIndex(dessertsSold)
-           cupcakeUiState.copy(
-               currentDessertIndex = nextDessertIndex,
-               revenue = cupcakeUiState.revenue + cupcakeUiState.currentDessertPrice,
-               dessertsSold = dessertsSold,
-               currentDessertImageId = dessertList[nextDessertIndex].imageId,
-               currentDessertPrice = dessertList[nextDessertIndex].price
-           )
-       }
+        _dessertUiState.update { cupcakeUiState ->
+            val dessertsSold = cupcakeUiState.dessertsSold + 1
+            val nextDessertIndex = determineDessertIndex(dessertsSold)
+            cupcakeUiState.copy(
+                currentDessertIndex = nextDessertIndex,
+                revenue = cupcakeUiState.revenue + cupcakeUiState.currentDessertPrice,
+                dessertsSold = dessertsSold,
+                currentDessertImageId = dessertList[nextDessertIndex].imageId,
+                currentDessertPrice = dessertList[nextDessertIndex].price
+            )
+        }
     }
 
     private fun determineDessertIndex(dessertsSold: Int): Int {
